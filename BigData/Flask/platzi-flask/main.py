@@ -3,6 +3,10 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
+import unittest
+
+import werkzeug
+werkzeug.cached_property = werkzeug.utils.cached_property
 
 app = Flask(__name__)
 app.config['ENV'] = 'development'
@@ -15,6 +19,12 @@ class LoginForm(FlaskForm):
     username = StringField('Nombre de usuario', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Enviar')
+
+
+@app.cli.command()
+def test():
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner().run(tests)
 
 @app.errorhandler(404)
 def not_fount(error):
