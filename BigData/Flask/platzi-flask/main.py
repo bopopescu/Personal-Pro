@@ -1,5 +1,5 @@
 from flask import request, make_response, redirect, render_template, session, url_for, flash
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 import unittest
 
@@ -39,7 +39,7 @@ def index():
 def hello():
     #Obtiene la ip del usuario desde la cookie
     user_ip = session.get('user_ip')
-    username = session.get('username')
+    username = current_user.id
     
     context = {
         'user_ip' : user_ip, 
