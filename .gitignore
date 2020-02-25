@@ -11,6 +11,8 @@ BigData/FundamentosR/
 BigData/IngenieriaDatos/
 BigData/Mysql/
 BigData/WebScraping/
+BigData/Others/
+
 
 BigData/Flask/.vscode/
 BigData/Flask/platzi-flask/venv/
@@ -18,6 +20,7 @@ BigData/Flask/platzi-flask/__pycache__/
 BigData/Flask/platzi-flask/tests/__pycache__/
 BigData/Flask/platzi-flask/app/__pycache__/
 BigData/Flask/platzi-flask/app/auth/__pycache__/
+
 
 
 
