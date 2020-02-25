@@ -15,11 +15,15 @@ BigData/Others/
 
 
 BigData/Flask/.vscode/
+BigData/Flask/P_flask.docx
 BigData/Flask/platzi-flask/venv/
 BigData/Flask/platzi-flask/__pycache__/
 BigData/Flask/platzi-flask/tests/__pycache__/
 BigData/Flask/platzi-flask/app/__pycache__/
 BigData/Flask/platzi-flask/app/auth/__pycache__/
+BigData/Flask/platzi-flask/.gcloudignore
+BigData/Flask/platzi-flask/app.yaml
+
 
 
 
