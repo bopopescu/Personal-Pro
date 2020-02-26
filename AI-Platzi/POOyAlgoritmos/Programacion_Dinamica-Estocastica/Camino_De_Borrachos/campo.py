@@ -13,6 +13,8 @@ class Campo:
         nueva_coordenada = coordenada_actual.mover(delta_x,delta_y)
         
         self.coordenadas_de_borrachos[borracho] = nueva_coordenada
+    
+        return nueva_coordenada
 
 
     def obtener_coordenada(self, borracho):
