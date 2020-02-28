@@ -1,12 +1,18 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
+
+#MySQL connection
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'toor'
 app.config['MYSQL_DB'] = 'flaskcontact'
 mysql = MySQL(app)
+
+#Setting
+
+app.secret_key = 'mysecretkey'
 
 @app.route('/')
 def Index():
@@ -18,8 +24,18 @@ def add_contact():
         fullname = request.form['fullname']
         phone = request.form['phone']
         email = request.form['email']
+        cur = mysql.connection.cursor()
+
+        cur.execute("""
+        INSERT INTO contacts(`fullname`, `phone`, `email`)
+            VALUES(%s,%s,%s)
+        """,(fullname,phone, email))
+
+        mysql.connection.commit()
+        flash(f'El contacto {fullname} fue agregado')
+
         print(f'Nombre: {fullname}\nPhone: {phone}\nEmail: {email}')
-        return f'Nombre: {fullname}\nPhone: {phone}\nEmail: {email}'
+        return redirect(url_for('Index'))
 
 @app.route('/edit')
 def edit_contact():
