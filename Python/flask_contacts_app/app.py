@@ -4,11 +4,11 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 
 #MySQL connection
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = 'be6v5hba1kumyfvusyeb-mysql.services.clever-cloud.com'
 app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'toor'
-app.config['MYSQL_DB'] = 'flaskcontact'
+app.config['MYSQL_USER'] = 'ucv6dyydm7ziyttq'
+app.config['MYSQL_PASSWORD'] = 'VDnUMuRPNYN1GqzQYxPT'
+app.config['MYSQL_DB'] = 'be6v5hba1kumyfvusyeb'
 mysql = MySQL(app)
 
 #Setting
