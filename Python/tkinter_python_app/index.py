@@ -26,6 +26,10 @@ class Product:
         #Button Add Product
         ttk.Button(frame, text = 'Save Product', command = self.add_product).grid(row = 3, columnspan = 2, sticky = W+E)
 
+        #Output messages
+        self.message = Label(text = '', fg = 'red')
+        self.message.grid(row = 3, column = 0, columnspan = 2, sticky = W + E)
+
         #Table
         self.tree = ttk.Treeview(height = 10, columns = 2)
         self.tree.grid(row = 4, column = 0, columnspan = 2)
@@ -81,9 +85,11 @@ class Product:
                         """,(self.name.get(),self.price.get()))
             conex.commit()
             self.get_products()
-            print(f'El contacto {self.name.get()} fue agregado')
+            self.message['text'] = f'El elemento {self.name.get()} fue agregado'
+            self.name.delete(0, END)
+            self.price.delete(0, END)
         else:
-            print('Name and Price are required')
+           self.message['text'] = 'El nombre y precio son requeridos'
   
 
 
