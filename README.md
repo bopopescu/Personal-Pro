@@ -9,3 +9,6 @@
 
 #### [Web App con Flask y MySQL usando Clever Cloud](https://github.com/drarn96/Personal-Pro/tree/master/Python/flask_contacts_app)
 * De manera similar, esta aplicación Web, se conecta a una base de datos MySQL alojada en los servidores de Clever Cloud, sin embargo, no está dispuesta para ser llevada a producción ni tampoco cuenta con un login, no obstante, el uso de Querys y etiquetas HTML son sobresalientes.
+
+#### [Aplicación de escritorio con Tkinter y MySQL](https://github.com/drarn96/Personal-Pro/tree/master/Python/tkinter_python_app)
+* Aplicación de escritorio que consiste en un CRUD donde se puede agregar, elminar y editar elementos de una base de datos. En este caso es una base de datos MySQL alojada en CleverCloud.
