@@ -15,6 +15,14 @@ class Product:
         self.name = Entry(frame)
         self.name.grid(row = 1, column = 1)
 
+        #Price input
+        Label(frame, text = 'Price: ').grid(row = 2, column = 0)
+        self.price = Entry(frame)
+        self.price.grid(row = 2, column = 1)
+
+        #Button Add Product
+        ttk.Button(frame, text = 'Save Product').grid(row = 3, columnspan = 2, sticky = W+E)
+
 
 if __name__ == '__main__':
     window = Tk()
