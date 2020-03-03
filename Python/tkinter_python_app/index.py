@@ -38,7 +38,7 @@ class Product:
 
         #Buttons
         ttk.Button(text = 'DELETE', command = self.delete_product).grid(row = 5, column = 0, sticky = W+E)
-        ttk.Button(text = 'EDIT').grid(row = 5, column = 1, sticky = W+E)
+        ttk.Button(text = 'EDIT', command = self.edit_product).grid(row = 5, column = 1, sticky = W+E)
        
        
        #Filling rows
@@ -105,6 +105,7 @@ class Product:
            self.message['text'] = 'El nombre y precio son requeridos'
     
     def delete_product(self):
+        self.message['text']=''
         try:
             texto = self.tree.item(self.tree.selection())['text'][0]
             texto = self.tree.item(self.tree.selection())['text']
@@ -118,8 +119,53 @@ class Product:
         except IndexError:
             self.message['text'] = 'Select an item to delete'
             return
+    
+    def edit_product(self):
+        self.message['text']=''
+        try:
+            self.tree.item(self.tree.selection())['text'][0]
+        except IndexError:
+            self.message['text'] = 'Select an item to edit'
+            return  
+        name = self.tree.item(self.tree.selection())['text']
+        old_price = self.tree.item(self.tree.selection())['values'][0]
 
-  
+        #New window
+        self.edit_wind = Toplevel()
+        self.edit_wind.title = 'Edit Product'
+
+        #Creating a Frame Container
+        frame_edit = LabelFrame(self.edit_wind, text = 'Edit a product', bd=4)
+        frame_edit.grid(row = 0, column = 0, columnspan = 8, padx=20, pady=20)
+
+        #Old name
+        Label(frame_edit, text = 'Old Name: ').grid(row = 0, column = 1)
+        Entry(frame_edit, textvariable = StringVar(frame_edit, value = name), state = 'readonly').grid(row = 0, column = 2)
+
+
+        #New name
+        Label(frame_edit, text = 'New Name: ').grid(row = 1, column = 1)
+        new_name = Entry(frame_edit)
+        new_name.focus()
+        new_name.grid(row = 1, column = 2)
+
+        #Old price
+        Label(frame_edit, text = 'Old Price: ').grid(row=2, column=1)
+        Entry(frame_edit, textvariable = StringVar(frame_edit, value = old_price), state = 'readonly').grid(row=2, column=2)
+        #New Price
+        Label(frame_edit, text = 'New Price: ').grid(row = 3, column = 1)
+        new_price = Entry(frame_edit)
+        new_price.grid(row = 3, column = 2)
+
+        #Button
+        Button(frame_edit, text = 'Update', command = lambda: self.edit_records(new_name.get(),name, new_price.get(), old_price)).grid(row = 4, columnspan = 3, sticky = W+E)
+
+    def edit_records(self, new_name, name, new_price, old_price):
+        query = f"UPDATE inventario SET item = '{new_name}', precio ='{new_price}' WHERE item = '{name}' AND precio = '{old_price}'"
+        self.run_query_get(query,False)
+        self.edit_wind.destroy()
+        self.message['text'] = f'Item {new_name} ha sido actualizado'
+        self.get_products()
 
 
 if __name__ == '__main__':
