@@ -36,6 +36,12 @@ class Product:
         self.tree.heading('#0', text = 'Name', anchor = CENTER)
         self.tree.heading('#1', text = 'Price', anchor = CENTER)
 
+        #Buttons
+        ttk.Button(text = 'DELETE', command = self.delete_product).grid(row = 5, column = 0, sticky = W+E)
+        ttk.Button(text = 'EDIT').grid(row = 5, column = 1, sticky = W+E)
+       
+       
+       #Filling rows
         self.get_products()
 
     #Método que establece la conexión a la base de datos
@@ -90,6 +96,22 @@ class Product:
             self.price.delete(0, END)
         else:
            self.message['text'] = 'El nombre y precio son requeridos'
+    
+    def delete_product(self):
+        try:
+            texto = self.tree.item(self.tree.selection())['text']
+            print(texto)
+            conex=self.abrir()
+            cursor=conex.cursor()
+            cursor.execute("DELETE FROM inventario WHERE item LIKE %s",[texto])
+            conex.commit()
+            self.get_products()
+            self.message['text'] = f'El elemento fue eliminado'
+
+        except IndexError:
+            self.message['text'] = 'Select an item to delete'
+            return
+
   
 
 
