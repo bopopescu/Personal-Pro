@@ -44,6 +44,14 @@ class Product:
        #Filling rows
         self.get_products()
 
+
+    def cleaning(self):
+        #Cleaning table
+        records = self.tree.get_children()
+        for element in records:
+            self.tree.delete(element)
+
+
     #Método que establece la conexión a la base de datos
     def abrir(self):
         cnx = mysql.connector.connect(user='ucv6dyydm7ziyttq', 
@@ -54,27 +62,29 @@ class Product:
         return cnx
     
     #Método que inicializa la conexión y corre los querys
-    def run_query_get(self, query):
+    def run_query_get(self, query, tipo):
         conex=self.abrir()
         cursor=conex.cursor()
         cursor.execute(query)
-        result = cursor.fetchall()
-        return result
+
+        if tipo:
+            result = cursor.fetchall()
+            return result
+
+        conex.commit()
          
     
     def get_products(self):
-        #Cleaning table
-        records = self.tree.get_children()
-        for element in records:
-            self.tree.delete(element)
+        self.cleaning()
 
         #Quering data    
         query = 'SELECT * FROM inventario ORDER BY item DESC'
-        db_rows = self.run_query_get(query)
+        db_rows = self.run_query_get(query, True)
 
         #Filling table
         for row in db_rows:
             self.tree.insert('', 0, text = row[1], values = row[2])
+
     
     def validation(self):
         return len(self.name.get()) != 0 and len(self.price.get()) != 0
@@ -85,11 +95,8 @@ class Product:
 
             conex=self.abrir()
             cursor=conex.cursor()
-            cursor.execute("""
-                        INSERT INTO inventario(`item`, `precio`)
-                            VALUES(%s,%s)
-                        """,(self.name.get(),self.price.get()))
-            conex.commit()
+            query = f"INSERT INTO inventario(`item`, `precio`) VALUES ('{self.name.get()}','{self.price.get()}')"
+            self.run_query_get(query, False)
             self.get_products()
             self.message['text'] = f'El elemento {self.name.get()} fue agregado'
             self.name.delete(0, END)
@@ -99,14 +106,14 @@ class Product:
     
     def delete_product(self):
         try:
+            texto = self.tree.item(self.tree.selection())['text'][0]
             texto = self.tree.item(self.tree.selection())['text']
-            print(texto)
             conex=self.abrir()
             cursor=conex.cursor()
-            cursor.execute("DELETE FROM inventario WHERE item LIKE %s",[texto])
-            conex.commit()
+            query = f"DELETE FROM inventario WHERE item = '{texto}'"
+            self.run_query_get(query, False)
             self.get_products()
-            self.message['text'] = f'El elemento fue eliminado'
+            self.message['text'] = f'El elemento {texto} fue eliminado'
 
         except IndexError:
             self.message['text'] = 'Select an item to delete'
@@ -118,4 +125,4 @@ class Product:
 if __name__ == '__main__':
     window = Tk()
     application = Product(window)
-    window.mainloop()
+    window.mainloop()  
