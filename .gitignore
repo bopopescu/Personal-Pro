@@ -51,6 +51,11 @@ Python/kivy_app/.vscode/
 Python/kivy_app/venv/
 Python/kivy_app/__pycache__/
 
+Python/kivy_mobile_app/.vscode/
+Python/kivy_mobile_app/venv/
+
+
+
 
 
 
