@@ -173,7 +173,7 @@
 
                     Label:
                         text: 'Code'
-                        size_hint_x:0.3
+                        size_hint_x:0.2
                     
                     Label:
                         text: 'Product name'
@@ -193,7 +193,7 @@
                     
                     Label:
                         text: 'Product Total'
-                        size_hint_x:0.1
+                        size_hint_x:0.2
             
                 GridLayout:
                     id: products
@@ -204,6 +204,11 @@
             id: preview
             orientation: "vertical"
             size_hint_x: 0.2
+
+            TextInput:
+                id: receipt_preview
+                readonly: True
+                text: 'The Collector\n123 Main St\nKnowhere, Space\n\nTel: 555 - 1233212\nReceipt No: \nDate:\n'
 
 
             
