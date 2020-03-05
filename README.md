@@ -12,3 +12,9 @@
 
 #### [Aplicación de escritorio con Tkinter y MySQL](https://github.com/drarn96/Personal-Pro/tree/master/Python/tkinter_python_app)
 * Aplicación de escritorio que consiste en un CRUD donde se puede agregar, elminar y editar elementos de una base de datos. En este caso es una base de datos MySQL alojada en CleverCloud.
+
+#### [Uso de Sockets para un Chatroom](https://github.com/drarn96/Personal-Pro/tree/master/Python/Sockets)
+* Mediante el uso de sockets varios usuarios se conecten a un servidor y puedan interactuar entre ellos.
+
+#### [Aplicación que cuenta con un Login y varias ventanas usando Kivy](https://github.com/drarn96/Personal-Pro/tree/master/Python/kivy_app)
+* En los commits relacionados a este proyecto estan de forma aislada el uso de algunas de las diferentes herramientas con las que contamos en Kivy para la creación de aplicaciones. Lo que aquí se encuentra es una implementación de todo lo repasado.
