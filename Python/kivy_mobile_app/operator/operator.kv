@@ -210,6 +210,22 @@
                 readonly: True
                 text: 'The Collector\n123 Main St\nKnowhere, Space\n\nTel: 555 - 1233212\nReceipt No: \nDate:\n'
 
+    BoxLayout:
+        id: footer
+        size_hint_y: None
+        height:30
+
+        canvas.before:
+            Color:
+                rgba:(0.06,0.47,0.47,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+        Label:
+            text: 'Maintained by me' 
+
 
             
         
