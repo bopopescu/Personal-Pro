@@ -75,6 +75,8 @@
                 state: 'down'
                 background_color: (0.06,0.47,0.47,1)
                 background_normal: ''
+                group: 'admin_navs'
+                on_state: root.change_screen(self)
             
             ToggleButton:
                 id: products_toggle
@@ -82,6 +84,8 @@
                 size_hint_y: 0.1
                 background_color: (0.06,0.47,0.47,1)
                 background_normal: ''
+                group: 'admin_navs'
+                on_state: root.change_screen(self)
 
             ToggleButton:
                 id: analysis_toggle
@@ -89,6 +93,8 @@
                 size_hint_y: 0.1
                 background_color: (0.06,0.47,0.47,1)
                 background_normal: ''
+                group: 'admin_navs'
+                on_state: root.change_screen(self)
 
             Label:
                 id: sp
@@ -96,6 +102,23 @@
                 size_hint_y: 0.7
         
         BoxLayout:
-            id: content
+            id: all_content
             size_hint_x: 0.8
+            padding: (20,10)
+
+            ScreenManager:
+                id: scrn_mngr
+
+                Screen:
+                    id: scrn_content
+                    name: 'scrn_content'
+
+                Screen:
+                    id: scrn_product_content
+                    name: 'scrn_product_content'
+
+                Screen:
+                    id: scrn_analysis
+                    name: 'scrn_analysis'
+
 
