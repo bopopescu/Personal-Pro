@@ -1,5 +1,9 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+from kivy.uix.spinner import Spinner
+
 from collections import OrderedDict
 from pymongo import MongoClient
 from utils.datatable import DataTable
@@ -8,16 +12,30 @@ class AdminWindow(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        content = self.ids.scrn_content
+        content = self.ids.scrn_contents
         users = self.get_users()
         userstable = DataTable(table=users)
         content.add_widget(userstable)
 
-        #Display products
-        products_scrn = self.ids.scrn_product_content
+        #Display Products
+        product_scrn = self.ids.scrn_product_content
         products = self.get_products()
         prod_table = DataTable(table=products)
-        products_scrn.add_widget(prod_table)
+        product_scrn.add_widget(prod_table)
+    
+    def add_user_fields(self):
+        target = self.ids.ops_fields
+        crud_first = TextInput(hint_text='First Name')
+        crud_last = TextInput(hint_text='Last Name')
+        crud_user = TextInput(hint_text='User Name')
+        crud_pwd = TextInput(hint_text='Password')
+        crud_des = Spinner(text='Operator',values=['Operator','Administrator'])
+
+        target.add_widget(crud_first)
+        target.add_widget(crud_last)
+        target.add_widget(crud_user)
+        target.add_widget(crud_pwd)
+        target.add_widget(crud_des)
 
 
     def get_users(self):
