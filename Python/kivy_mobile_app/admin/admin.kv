@@ -1,3 +1,6 @@
+<FlatButton@ButtonBehavior+Label>:
+    text: 'default'
+
 <AdminWindow>:
     id: main_win
     orientation: 'vertical'
@@ -23,7 +26,7 @@
                 size: self.size
                 pos: self.pos
     
-        Button:
+        FlatButton:
             id: file_trigger
             text: 'File'
             on_release: file_dropdown.open(self)
@@ -47,3 +50,52 @@
             bold: True
             size_hint: (0.9, None)
             height: 30
+
+    BoxLayout:
+        id: content_nav
+
+        BoxLayout:
+            id: nav_tabs
+            size_hint_x: 0.2
+            orientation: 'vertical'
+            spacing: 3
+
+            canvas.before:
+                Color:
+                    rgba: (0.06,0.40,0.40,1)
+
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            
+            ToggleButton:
+                id: user_toggle
+                text: 'Manage Users'
+                size_hint_y: 0.1
+                state: 'down'
+                background_color: (0.06,0.47,0.47,1)
+                background_normal: ''
+            
+            ToggleButton:
+                id: products_toggle
+                text: 'Manage Products'
+                size_hint_y: 0.1
+                background_color: (0.06,0.47,0.47,1)
+                background_normal: ''
+
+            ToggleButton:
+                id: analysis_toggle
+                text: 'Product Analysis'
+                size_hint_y: 0.1
+                background_color: (0.06,0.47,0.47,1)
+                background_normal: ''
+
+            Label:
+                id: sp
+                text: ''
+                size_hint_y: 0.7
+        
+        BoxLayout:
+            id: content
+            size_hint_x: 0.8
+
