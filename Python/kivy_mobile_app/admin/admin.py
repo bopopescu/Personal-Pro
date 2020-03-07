@@ -7,10 +7,16 @@ from kivy.uix.spinner import Spinner
 from collections import OrderedDict
 from pymongo import MongoClient
 from utils.datatable import DataTable
+from datetime import datetime
 
 class AdminWindow(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        client = MongoClient()
+        db = client.SilverPos
+        self.users = db.users
+        self.products = db.stocks
 
         content = self.ids.scrn_contents
         users = self.get_users()
@@ -25,17 +31,30 @@ class AdminWindow(BoxLayout):
     
     def add_user_fields(self):
         target = self.ids.ops_fields
+        target.clear_widgets()
         crud_first = TextInput(hint_text='First Name')
         crud_last = TextInput(hint_text='Last Name')
         crud_user = TextInput(hint_text='User Name')
         crud_pwd = TextInput(hint_text='Password')
         crud_des = Spinner(text='Operator',values=['Operator','Administrator'])
+        curd_submit = Button(text='Add', size_hint_x=None, width=100, on_release= lambda x: 
+            self.add_user(crud_first.text, crud_last.text, crud_user.text, crud_pwd.text, crud_des.text))
 
         target.add_widget(crud_first)
         target.add_widget(crud_last)
         target.add_widget(crud_user)
         target.add_widget(crud_pwd)
         target.add_widget(crud_des)
+        target.add_widget(curd_submit)
+    
+    def add_user(self, first, last, user, pwd, des):
+        content = self.ids.scrn_contents
+        content.clear_widgets()
+        self.users.insert_one({'first_name':first,'last_name':last,'user_name':user,'password':pwd, 'designation':des, 'date':datetime.now() })
+
+        users = self.get_users()
+        userstable = DataTable(table=users)
+        content.add_widget(userstable)
 
 
     def get_users(self):
