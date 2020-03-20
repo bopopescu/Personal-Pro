@@ -1,25 +1,51 @@
 # coding: utf-8
 
 from kivy.app import App
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+from kivy.core.window import Window
 from kivy.uix.label import Label
 
 
+def click():
+    print('Hi')
+
+
 def build():
-    # Form One
-    # lb = Label(text = "Curso de Python e Kivy", italic = True, font_size = 50)
+    layout = FloatLayout()
 
-    # Form Two
-    # lb = Label()
-    # lb.text = "Curso de Python e Kivy"
-    # lb.italic = True
-    # lb.font_size = 50
+    ed = TextInput(text="Hello World")
+    ed.size_hint = None, None
+    ed.height = 300
+    ed.width = 400
+    ed.x = 100
+    ed.y = 250
 
-    # Form Three
-    formato = {'text': "Curso de Python e Kivy", 'italic': True, 'font_size': 50}
+    bt = Button(text="Click")
+    bt.size_hint = None, None
+    bt.width = 200
+    bt.height = 50
+    bt.y = 150
+    bt.x = 200
+    bt.on_press = click
+
+    formato = {'text': "Hello World With Label, Text Input and Button", 'italic': True, 'font_size': 30}
     lb = Label(**formato)
-    return lb
+    lb.size_hint = None, None
+    lb.width = 400
+    lb.height = 50
+    lb.y = 50
+    lb.x = 100
+
+    layout.add_widget(ed)
+    layout.add_widget(bt)
+    layout.add_widget(lb)
+    return layout
 
 
-hello_world = App()
-hello_world.build = build
-hello_world.run()
+window = App()
+window.title = "Hello"
+Window.size = 600, 600
+window.build = build
+window.run()
