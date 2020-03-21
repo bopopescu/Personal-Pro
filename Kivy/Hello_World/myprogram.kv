@@ -1,0 +1,37 @@
+<FirstWindow>:
+    FloatLayout:
+        TextInput:
+            text: "Hello World"
+            size_hint: None, None
+            height: 300
+            width: 400
+            x: 100
+            y: 250
+
+        Button:
+            text: "Click"
+            size_hint: None, None
+            width: 200
+            height: 50
+            y: 150
+            x: 200
+            on_press: root.on_press_bt()
+
+        Label:
+            text: "Hello World With Label, Text Input and Button"
+            italic: True
+            font_size: 30
+            size_hint: None, None
+            width: 400
+            height: 50
+            y: 50
+            x: 100
+
+<SecondWindow>:
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Hello World Label"
+        Button:
+            text: "Click Here"
+            on_press: root.on_press_bt()
