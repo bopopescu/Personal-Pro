@@ -17,4 +17,10 @@
 * Mediante el uso de sockets varios usuarios se conecten a un servidor y puedan interactuar entre ellos.
 
 #### [Ruta de Aprendizaje de Kivy](https://github.com/drarn96/Personal-Pro/tree/master/Kivy)
-* En los diferentes directorios se encuentra trozos de código que ejecutan funciones especificas del framework Kivy. 
+* En los diferentes directorios se encuentra trozos de código que ejecutan funciones especificas del framework Kivy.
+
+#### [Web Scraper utilizando Selenium en Google Chrome para páginas con contenido interactivo](https://github.com/drarn96/Personal-Pro/tree/master/Python/Selenium-Scraper)
+* Web Scraper utilizando el lenguaje Python y el entrono de pruebas Selenium con la finalidad de obtener información de páginas web con contenido interactivo. En este caso en particular se scrapea la página de Latam para obtener la información relacionada a vuelos y escalas.
+
+#### [Web scrapping implementado en R](https://github.com/drarn96/Personal-Pro/tree/master/Python/R-Scrapper)
+* Scraper implementado en R donde se utiliza la web de amazon para extraer información sobre aspiradoras.
