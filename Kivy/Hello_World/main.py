@@ -27,4 +27,5 @@ class MyProgram(App):
 window = MyProgram()
 window.title = "Hello"
 Window.size = 600, 600
+Window.clearcolor = [1, 1, 1, 1]
 window.run()
