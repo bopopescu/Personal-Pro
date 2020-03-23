@@ -4,6 +4,8 @@ from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
+from kivy.lang import Builder
+from os import listdir
 
 
 class FirstWindow(FloatLayout):
@@ -24,6 +26,7 @@ class MyProgram(App):
         return FirstWindow()
 
 
+[Builder.load_file(f"windows/{f}") for f in listdir("windows")]
 window = MyProgram()
 window.title = "Hello"
 Window.size = 600, 600
