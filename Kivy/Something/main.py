@@ -7,12 +7,15 @@ from kivy.lang import Builder
 from os import listdir
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
+from kivy.clock import Clock
+from kivy.uix.label import Label
 
 
 class MyProgram(App):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.count_time = 0
         self.windows_list = Costants.windows
         self.windows_class = []
         for wl in self.windows_list:
@@ -35,16 +38,22 @@ class MyProgram(App):
         screen_manager.current = self.windows_list[0]
         print(screen_manager.current)
 
+        Clock.schedule_interval(self.Callback_Clock, 2)
         return screen_manager
+
+    def Callback_Clock(self, dt):
+        self.count_time += 1
+        self.screens[0].ids.time_pass.text = str(self.count_time)
+
 
 
 class Skull(Button):
     def run_pupup(self):
         Emergent().open()
 
-
 class Emergent(Popup):
     pass
+
 
 if __name__ == "__main__":
     window = MyProgram()
