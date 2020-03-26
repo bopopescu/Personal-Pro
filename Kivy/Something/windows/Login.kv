@@ -1,0 +1,130 @@
+<ExitButton@Button>
+    font_size: 30
+    font_name: "Solway-Regular"
+    color: 1,1,1,0.01
+    size_hint: None, None
+    size: 360, 23
+    top: 640-0
+    left: 0
+    halign: "center"
+    valign: "middle"
+    background_color: 8/255,0,37/255,1
+    background_normal: ''
+    text: "E X I T"
+    bold: True
+    on_release: app.get_running_app().stop()
+
+<LoginLabel@Label>:
+    font_size: 71
+    font_name: "Solway-Regular"
+    color: 1,1,1,0.73
+    size_hint: None, None
+    size: 244.01, 172
+    text_size:244.01, 172
+    top: 640-65
+    x: 58
+    halign: "center"
+    valign: "middle"
+    text: "Wanna Play"
+
+<LabelInputs@Label>:
+    font_size: 18
+    font_name: "Solway-Regular"
+    color: 1,1,1,0.55
+    size_hint: None, None
+    size: 77.76,24
+    top: 640-294
+    x: 66
+    halign: "left"
+    valign: "middle"
+    text: "username"
+
+<BoxInputs@TextInput>:
+    font_size: 18
+    font_name: "Solway-Regular"
+    color: 0,0,0,1
+    size_hint: None, None
+    size: 229, 42
+    halign: "center"
+    valign: "middle"
+    background_color: 1,1,1,1
+    background_normal: ''
+    top: 640-318
+    x: 66
+    multiline: False
+
+<LoginButton@Button>
+    font_size: 24
+    font_name: "Solway-Regular"
+    color: 1,1,1,0.71
+    size_hint: None, None
+    size: 229, 40
+    halign: "center"
+    valign: "middle"
+    background_color:20/255,0,100/255,0.75
+    background_normal: ''
+    top: 640-514
+    x:66
+    text: "L o g i n"
+
+<Skull@Button>:
+    background_normal: './personalUtilities/skkull.png'
+    background_down:'./personalUtilities/spiddi.png'
+    size_hint: None, None
+    size: 12,12
+    pos: 150,640-314
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: 180
+            origin: self.center
+    canvas.after:
+        PopMatrix
+    on_release: self.run_pupup()
+
+<Emergent@Popup>:
+    size_hint: None, None
+    top: 640-109
+    x: 43
+    size: 274, 197
+    background:""
+    background_color: 0,0,0,1
+    separator_color: 0,0,0,0
+    title: "You are not able to do that"
+    title_font: "Solway-Regular"
+    title_size: 36
+    title_align: "center"
+    title_color: 1,1,1,0.45
+    pos: 43, 640-266
+
+    canvas.before:
+        Color:
+            rgba: (0,0,0,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    LoginButton:
+        background_color:20/255,0,100/255,0.08
+        text: "C l o s e"
+        on_press: root.dismiss()
+
+<Login>:
+    FloatLayout:
+        ExitButton:
+        LoginLabel:
+        LabelInputs:
+        BoxInputs:
+            id:username
+        LabelInputs:
+            text:"password"
+            top: 640-381
+            x: 66
+            size:75.43,24
+        BoxInputs:
+            id:password
+            top: 640-405
+        LoginButton:
+        Skull:
+
+
