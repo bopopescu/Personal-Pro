@@ -130,7 +130,7 @@
             id:password
             top: 640-405
         LoginButton:
-            on_release: if self.check_everything(root.ids.username.text, root.ids.password.text): app.root.current = "Info"
+            on_release: if self.check_everything(root.ids.username.text, root.ids.password.text): app.LoadData()
         Skull:
         LabelInputs:
             id: time_pass

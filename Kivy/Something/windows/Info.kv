@@ -1,3 +1,30 @@
+<ScrollLayout@FloatLayout>:
+    size_hint: None, None
+    pos: 32, 640-252
+    size: 296, 128
+    canvas.before:
+        Color:
+            rgba: (23/255,0,0, 0.8)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
 <Info>:
     FloatLayout:
         ExitButton:
+        LoginLabel:
+            text: "List"
+            size: 135.36, 86
+            pos: 112.64, 640-108
+        ScrollLayout:
+        BoxLayout:
+            size_hint: None, None
+            size: 274,98
+            pos: 44, 640-237
+            ScrollView:
+                size: self.size
+                GridLayout:
+                    cols: 3
+                    id: container_grid
+                    size_hint_y:None
+                    spacing:10

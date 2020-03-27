@@ -1,4 +1,6 @@
 # Font directory: C:\Users\drarn\Documents\Code\Study\Kivy\kivy_venv\Lib\site-packages\kivy\data\fonts
+# Font URL: https://github.com/google/fonts/blob/master/ofl/solway/Solway-Regular.ttf
+
 from personalUtilities.utilities import Costants, Process, Conection
 from kivy.app import App
 from kivy.core.window import Window
@@ -8,10 +10,11 @@ from os import listdir
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.clock import Clock
+from kivy.uix.label import Label
+from kivy.uix.spinner import Spinner
 
 
 class MyProgram(App):
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.count_time = 0
@@ -27,20 +30,46 @@ class MyProgram(App):
         self.title = "Wanna Play"
         Window.size = 360, 640
         Window.clearcolor = [6 / 255, 0, 27 / 255, 1]
-        screen_manager = ScreenManager()
+        self.screen_manager = ScreenManager()
 
         for idx, i in enumerate(self.windows_list):
             screen = self.windows_class[idx](name=i)
             self.screens.append(screen)
-            screen_manager.add_widget(screen)
+            self.screen_manager.add_widget(screen)
             Process.create_kv()
-        screen_manager.current = self.windows_list[0]
+        self.screen_manager.current = self.windows_list[0]
         Clock.schedule_interval(self.Callback_Clock, 2)
-        return screen_manager
+        return self.screen_manager
 
     def Callback_Clock(self, dt):
         self.count_time += 1
         self.screens[0].ids.time_pass.text = str(self.count_time)
+
+    def LoadData(self):
+        conn, c = Conection.abrir_sqlite()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users")
+        result = cursor.fetchall()
+        print(result)
+
+        container_id = self.screens[2].ids.container_grid
+
+        container_id.bind(minimum_height=container_id.setter('height'))
+        for user_info in result:
+            user_name = Button(text=user_info[1], halign="center", valign="middle", size_hint=(None, None),
+                               size=(126, 20), color=(1, 1, 1, 0.85), font_size=14, font_name="Solway-Regular",
+                               id='username')
+            lab = Label(text=user_info[2], halign="center", valign="middle", size_hint=(None, None),
+                        size=(93.85, 14), color=(1, 1, 1, 0.85), font_size=12, font_name="Solway-Regular",
+                        text_size=(93.85, 14))
+            spin = Spinner(text=str(user_info[3]), values=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                           halign="center", valign="middle", size_hint=(None, None), size=(23, 20),
+                           color=(1, 1, 1, 0.85), font_size=16, font_name="Solway-Regular")
+            container_id.add_widget(user_name)
+            container_id.add_widget(lab)
+            container_id.add_widget(spin)
+
+        self.screen_manager.current = 'Info'
 
 
 class Skull(Button):
