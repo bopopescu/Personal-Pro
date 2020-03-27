@@ -119,7 +119,8 @@
         LabelInputs:
         BoxInputs:
             id:username
-            on_text_validate: MyUtilities.check_nickname(self.text)
+            focus: True
+            on_text_validate: if MyUtilities.check_nickname(self.text): root.ids.password.focus = True
         LabelInputs:
             text:"password"
             top: 640-381
@@ -129,7 +130,7 @@
             id:password
             top: 640-405
         LoginButton:
-            on_release: self.check_everything(root.ids.username.text, root.ids.password.text)
+            on_release: if self.check_everything(root.ids.username.text, root.ids.password.text): app.root.current = "Info"
         Skull:
         LabelInputs:
             id: time_pass

@@ -55,17 +55,41 @@ class Emergent(Popup):
 class LoginButton(Button):
     def check_everything(self, username, password):
         if Process.check_nickname(username):
+            print('Correct username\n')
             if Conection.check_internet():
+                print('You have internet connection\n')
                 cnx = Conection.abrir()
                 cursor = cnx.cursor()
                 cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
                 result = cursor.fetchone()
                 if result is None:
-                    print("This user doesn't exist")
+                    print("This user doesn't exist\n")
+                    return False
+                if result[0] == password:
+                    print('You are right\n')
+                    return True
+                else:
+                    print('Wrong password\n')
+                    return False
             else:
-                print('There is not internet connection')
+                print('There is not internet connection. It will be used the local database\n')
+                conn, c = Conection.abrir_sqlite()
+                c.execute("SELECT password FROM users WHERE username = :username",
+                          {'username': username})
+                result = c.fetchone()
+
+                if result is None:
+                    print("This user doesn't exist\n")
+                    return False
+                if result[0] == password:
+                    print('You are right\n')
+                    return True
+                else:
+                    print('Wrong password\n')
+                    return False
         else:
             print('invalid username')
+            return False
 
 
 if __name__ == "__main__":

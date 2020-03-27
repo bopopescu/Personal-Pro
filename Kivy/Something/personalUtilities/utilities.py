@@ -3,6 +3,7 @@ from pathlib import Path
 import mysql.connector
 import re
 import urllib.request
+import sqlite3
 
 
 
@@ -48,3 +49,16 @@ class Conection:
                                       database='be6v5hba1kumyfvusyeb',
                                       port=3306)
         return cnx
+
+    @staticmethod
+    def abrir_sqlite():
+        conn = sqlite3.connect('personalUtilities/BaseDeDatos.db')
+        c = conn.cursor()
+        return conn, c
+
+    @staticmethod
+    def add_user(username, password):
+        conn, c = Conection.abrir_sqlite()
+        with conn:
+            c.execute("INSERT INTO users VALUES (NULL, :username, :password)",
+                      {'username': username, 'password': password})
