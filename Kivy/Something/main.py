@@ -53,7 +53,6 @@ class MyProgram(App):
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users")
         result = cursor.fetchall()
-        print(result)
 
         container_id = self.screens[2].ids.container_grid
 
@@ -68,18 +67,26 @@ class MyProgram(App):
             spin = Spinner(text=str(user_info[3]), values=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
                            halign="center", valign="middle", size_hint=(None, None), size=(23, 20),
                            color=(1, 1, 1, 0.85), font_size=16, font_name="Solway-Regular")
+
             container_id.add_widget(user_name)
             container_id.add_widget(lab)
             container_id.add_widget(spin)
 
-        self.buttons = container_id.children[2::3]
         self.screen_manager.current = 'Info'
 
     def buttonEdit(self, obj):
-        print(obj.text)
+        self.obj = obj
+        pup = EmergentEdit()
+        pup.ids.input_username.text = obj.text
+        pup.ids.input_username.on_text_validate = pup.on_text_validate
+        pup.open()
 
 
-
+class EmergentEdit(Popup):
+    def on_text_validate(self):
+        window.obj.text = self.ids.input_username.text
+        self.dismiss()
+    pass
 
 class Skull(Button):
     def run_pupup(self):

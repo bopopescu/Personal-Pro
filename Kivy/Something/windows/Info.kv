@@ -9,6 +9,39 @@
             size: self.size
             pos: self.pos
 
+<PupTextInput@TextInput>:
+    font_size: 14
+    font_name: "Solway-Regular"
+    halign: "center"
+    valign: "middle"
+    background_color: 1,1,1,1
+    background_normal: ''
+    multiline: False
+
+<EmergentEdit@Popup>:
+    size_hint: None, None
+    top: 640-109
+    x: 43
+    size: 274, 100
+    background:""
+    background_color: 0,0,0,1
+    separator_color: 0,0,0,0
+    title: "Edit username"
+    title_font: "Solway-Regular"
+    title_size: 24
+    title_align: "center"
+    title_color: 1,1,1,0.8
+    pos: 43, 640-266
+    canvas.before:
+        Color:
+            rgba: (0,0,0,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    PupTextInput:
+        id: input_username
+        focus: True
+
 <Info>:
     FloatLayout:
         ExitButton:
