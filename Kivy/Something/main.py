@@ -84,9 +84,16 @@ class MyProgram(App):
 
 class EmergentEdit(Popup):
     def on_text_validate(self):
-        window.obj.text = self.ids.input_username.text
+        old_username = window.obj.text
+        new_username = self.ids.input_username.text
+        if Process.check_nickname(new_username):
+            window.obj.text = new_username
+            conn, c = Conection.abrir_sqlite()
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users set username = :new_username WHERE username = :old_username",
+                           {'new_username': new_username, 'old_username': old_username})
+            conn.commit()
         self.dismiss()
-    pass
 
 class Skull(Button):
     def run_pupup(self):
