@@ -1,3 +1,6 @@
+#: import MyUtilities personalUtilities.utilities.Process
+#: import MyConection personalUtilities.utilities.Conection
+
 <ExitButton@Button>
     font_size: 30
     font_name: "Solway-Regular"
@@ -116,6 +119,7 @@
         LabelInputs:
         BoxInputs:
             id:username
+            on_text_validate: MyUtilities.check_nickname(self.text)
         LabelInputs:
             text:"password"
             top: 640-381
@@ -125,6 +129,7 @@
             id:password
             top: 640-405
         LoginButton:
+            on_release: self.check_everything(root.ids.username.text, root.ids.password.text)
         Skull:
         LabelInputs:
             id: time_pass

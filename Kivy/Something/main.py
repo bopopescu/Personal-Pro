@@ -1,5 +1,5 @@
 # Font directory: C:\Users\drarn\Documents\Code\Study\Kivy\kivy_venv\Lib\site-packages\kivy\data\fonts
-from personalUtilities.utilities import Costants, Process
+from personalUtilities.utilities import Costants, Process, Conection
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -8,7 +8,6 @@ from os import listdir
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.clock import Clock
-from kivy.uix.label import Label
 
 
 class MyProgram(App):
@@ -36,8 +35,6 @@ class MyProgram(App):
             screen_manager.add_widget(screen)
             Process.create_kv()
         screen_manager.current = self.windows_list[0]
-        print(screen_manager.current)
-
         Clock.schedule_interval(self.Callback_Clock, 2)
         return screen_manager
 
@@ -46,13 +43,29 @@ class MyProgram(App):
         self.screens[0].ids.time_pass.text = str(self.count_time)
 
 
-
 class Skull(Button):
     def run_pupup(self):
         Emergent().open()
 
+
 class Emergent(Popup):
     pass
+
+
+class LoginButton(Button):
+    def check_everything(self, username, password):
+        if Process.check_nickname(username):
+            if Conection.check_internet():
+                cnx = Conection.abrir()
+                cursor = cnx.cursor()
+                cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
+                result = cursor.fetchone()
+                if result is None:
+                    print("This user doesn't exist")
+            else:
+                print('There is not internet connection')
+        else:
+            print('invalid username')
 
 
 if __name__ == "__main__":
