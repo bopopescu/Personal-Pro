@@ -14,6 +14,9 @@ from kivy.uix.label import Label
 from kivy.uix.spinner import Spinner
 
 
+
+
+
 class MyProgram(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -58,7 +61,7 @@ class MyProgram(App):
         for user_info in result:
             user_name = Button(text=user_info[1], halign="center", valign="middle", size_hint=(None, None),
                                size=(126, 20), color=(1, 1, 1, 0.85), font_size=14, font_name="Solway-Regular",
-                               id='username')
+                               on_release=self.buttonEdit)
             lab = Label(text=user_info[2], halign="center", valign="middle", size_hint=(None, None),
                         size=(93.85, 14), color=(1, 1, 1, 0.85), font_size=12, font_name="Solway-Regular",
                         text_size=(93.85, 14))
@@ -69,7 +72,13 @@ class MyProgram(App):
             container_id.add_widget(lab)
             container_id.add_widget(spin)
 
+        self.buttons = container_id.children[2::3]
         self.screen_manager.current = 'Info'
+
+    def buttonEdit(self, obj):
+        print(obj.text)
+
+
 
 
 class Skull(Button):
