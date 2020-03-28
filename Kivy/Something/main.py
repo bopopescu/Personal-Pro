@@ -1,7 +1,7 @@
 # Font directory: C:\Users\drarn\Documents\Code\Study\Kivy\kivy_venv\Lib\site-packages\kivy\data\fonts
 # Font URL: https://github.com/google/fonts/blob/master/ofl/solway/Solway-Regular.ttf
 
-from personalUtilities.utilities import Costants, Process, Conection
+import personalUtilities.utilities
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -18,7 +18,7 @@ class MyProgram(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.count_time = 0
-        self.windows_list = Costants.windows
+        self.windows_list = personalUtilities.utilities.Costants.windows
         self.windows_class = []
         for wl in self.windows_list:
             self.windows_class.append(type(wl, (Screen,), {}))
@@ -36,7 +36,7 @@ class MyProgram(App):
             screen = self.windows_class[idx](name=i)
             self.screens.append(screen)
             self.screen_manager.add_widget(screen)
-            Process.create_kv()
+            personalUtilities.utilities.Process.create_kv()
         self.screen_manager.current = self.windows_list[0]
         Clock.schedule_interval(self.Callback_Clock, 2)
         return self.screen_manager
@@ -46,7 +46,7 @@ class MyProgram(App):
         self.screens[0].ids.time_pass.text = str(self.count_time)
 
     def LoadData(self):
-        conn, c = Conection.abrir_sqlite()
+        conn, c = personalUtilities.utilities.Conection.abrir_sqlite()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users")
         result = cursor.fetchall()
@@ -79,10 +79,11 @@ class MyProgram(App):
         pup.ids.input_username.on_text_validate = pup.on_text_validate
         pup.open()
 
-    def show_selected_value(self, spinner, text):
+    @staticmethod
+    def show_selected_value(spinner, text):
         text = int(text)
         id_user = int(spinner.id)
-        conn, c = Conection.abrir_sqlite()
+        conn, c = personalUtilities.utilities.Conection.abrir_sqlite()
         cursor = conn.cursor()
         cursor.execute("UPDATE users set times = :text WHERE id_user = :id_user",
                        {'text': text, 'id_user': id_user})
@@ -92,14 +93,15 @@ class MyProgram(App):
         self.screens[2].ids.color_try.canvas.before.children[0].rgb = [(int(colors[0]) / 255), (int(colors[1]) / 255),
                                                                        (int(colors[2]) / 255)]
 
-    def save_cloud(self):
-        if Conection.check_internet():
-            conn, c = Conection.abrir_sqlite()
+    @staticmethod
+    def save_cloud():
+        if personalUtilities.utilities.Conection.check_internet():
+            conn, c = personalUtilities.utilities.Conection.abrir_sqlite()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM users")
             local = cursor.fetchall()
 
-            cnx = Conection.abrir()
+            cnx = personalUtilities.utilities.Conection.abrir()
             cursor = cnx.cursor()
             for loc in local:
                 print(loc)
@@ -107,13 +109,14 @@ class MyProgram(App):
                                                                                                   loc[0]))
                 cnx.commit()
 
+
 class EmergentEdit(Popup):
     def on_text_validate(self):
         old_username = window.obj.text
         new_username = self.ids.input_username.text
-        if Process.check_nickname(new_username):
+        if personalUtilities.utilities.Process.check_nickname(new_username):
             window.obj.text = new_username
-            conn, c = Conection.abrir_sqlite()
+            conn, c = personalUtilities.utilities.Conection.abrir_sqlite()
             cursor = conn.cursor()
             cursor.execute("UPDATE users set username = :new_username WHERE username = :old_username",
                            {'new_username': new_username, 'old_username': old_username})
@@ -122,7 +125,9 @@ class EmergentEdit(Popup):
 
 
 class Skull(Button):
-    def run_pupup(self):
+
+    @staticmethod
+    def run_pupup():
         Emergent().open()
 
 
@@ -131,12 +136,14 @@ class Emergent(Popup):
 
 
 class LoginButton(Button):
-    def check_everything(self, username, password):
-        if Process.check_nickname(username):
+
+    @staticmethod
+    def check_everything(username, password):
+        if personalUtilities.utilities.Process.check_nickname(username):
             print('Correct username\n')
-            if Conection.check_internet():
+            if personalUtilities.utilities.Conection.check_internet():
                 print('You have internet connection\n')
-                cnx = Conection.abrir()
+                cnx = personalUtilities.utilities.Conection.abrir()
                 cursor = cnx.cursor()
                 cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
                 result = cursor.fetchone()
@@ -151,7 +158,7 @@ class LoginButton(Button):
                     return False
             else:
                 print('There is not internet connection. It will be used the local database\n')
-                conn, c = Conection.abrir_sqlite()
+                conn, c = personalUtilities.utilities.Conection.abrir_sqlite()
                 c.execute("SELECT password FROM users WHERE username = :username",
                           {'username': username})
                 result = c.fetchone()
