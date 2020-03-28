@@ -92,6 +92,20 @@ class MyProgram(App):
         self.screens[2].ids.color_try.canvas.before.children[0].rgb = [(int(colors[0]) / 255), (int(colors[1]) / 255),
                                                                        (int(colors[2]) / 255)]
 
+    def save_cloud(self):
+        if Conection.check_internet():
+            conn, c = Conection.abrir_sqlite()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM users")
+            local = cursor.fetchall()
+
+            cnx = Conection.abrir()
+            cursor = cnx.cursor()
+            for loc in local:
+                print(loc)
+                cursor.execute("UPDATE users SET username = %s, times = %s WHERE id_user = %s;", (loc[1], loc[3],
+                                                                                                  loc[0]))
+                cnx.commit()
 
 class EmergentEdit(Popup):
     def on_text_validate(self):
