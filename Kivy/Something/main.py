@@ -14,9 +14,6 @@ from kivy.uix.label import Label
 from kivy.uix.spinner import Spinner
 
 
-
-
-
 class MyProgram(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -66,11 +63,12 @@ class MyProgram(App):
                         text_size=(93.85, 14))
             spin = Spinner(text=str(user_info[3]), values=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
                            halign="center", valign="middle", size_hint=(None, None), size=(23, 20),
-                           color=(1, 1, 1, 0.85), font_size=16, font_name="Solway-Regular")
+                           color=(1, 1, 1, 0.85), font_size=16, font_name="Solway-Regular", id=str(user_info[0]))
 
             container_id.add_widget(user_name)
             container_id.add_widget(lab)
             container_id.add_widget(spin)
+            spin.bind(text=self.show_selected_value)
 
         self.screen_manager.current = 'Info'
 
@@ -80,6 +78,15 @@ class MyProgram(App):
         pup.ids.input_username.text = obj.text
         pup.ids.input_username.on_text_validate = pup.on_text_validate
         pup.open()
+
+    def show_selected_value(self, spinner, text):
+        text = int(text)
+        id_user = int(spinner.id)
+        conn, c = Conection.abrir_sqlite()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE users set times = :text WHERE id_user = :id_user",
+                       {'text': text, 'id_user': id_user})
+        conn.commit()
 
 
 class EmergentEdit(Popup):
@@ -94,6 +101,7 @@ class EmergentEdit(Popup):
                            {'new_username': new_username, 'old_username': old_username})
             conn.commit()
         self.dismiss()
+
 
 class Skull(Button):
     def run_pupup(self):
