@@ -42,6 +42,19 @@
         id: input_username
         focus: True
 
+
+<Sslider@Slider>:
+    min: 0
+    max: 255
+    value_track: True
+    value_track_color: (0, 0, 1, 1)
+
+<ButtonColor@Button>:
+    size_hint: None, None
+    size: 274, 30
+    top:640-420
+    x:43
+
 <Info>:
     FloatLayout:
         ExitButton:
@@ -61,3 +74,56 @@
                     id: container_grid
                     size_hint_y:None
                     spacing:10
+        BoxLayout:
+            top:640-290
+            x:32
+            size_hint: None, None
+            size:294,124
+            orientation:"vertical"
+            BoxLayout:
+                Sslider:
+                    size_hint_x:0.8
+                    value_track_color: (1, 0, 0, 1)
+                    on_value: R_slider_text.text = str(int(self.value))
+                Label:
+                    id: R_slider_text
+                    size_hint_x: 0.2
+                    text: "0"
+            BoxLayout:
+                Sslider:
+                    size_hint_x:0.8
+                    value_track_color: (0, 1, 0, 1)
+                    on_value: G_slider_text.text = str(int(self.value))
+                Label:
+                    id: G_slider_text
+                    size_hint_x: 0.2
+                    text: "0"
+            BoxLayout:
+                Sslider:
+                    size_hint_x:0.8
+                    value_track_color: (0, 0, 1, 1)
+                    on_value: B_slider_text.text = str(int(self.value))
+                Label:
+                    id: B_slider_text
+                    size_hint_x: 0.2
+                    text: "0"
+
+        ButtonColor:
+            text: "Color"
+            on_release: app.chage_color(R_slider_text.text,G_slider_text.text,B_slider_text.text)
+
+        BoxLayout:
+            id:color_try
+            size_hint: None, None
+            size: 38,35
+            top: 640- 52
+            x:287
+            canvas.before:
+                Color:
+                    rgba: (0, 0, 0, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+
+

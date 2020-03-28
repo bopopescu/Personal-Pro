@@ -88,6 +88,10 @@ class MyProgram(App):
                        {'text': text, 'id_user': id_user})
         conn.commit()
 
+    def chage_color(self, *colors):
+        self.screens[2].ids.color_try.canvas.before.children[0].rgb = [(int(colors[0]) / 255), (int(colors[1]) / 255),
+                                                                       (int(colors[2]) / 255)]
+
 
 class EmergentEdit(Popup):
     def on_text_validate(self):
