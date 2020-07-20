@@ -1796,7 +1796,7 @@ class OProc(object):
                 # if stderr is going to stdout, but stdout is a tty or a pipe,
                 # we should not specify a read_fd, because stdout is dup'd
                 # directly to the stdout fd (no pipe), and so stderr won't have
-                # a slave end of a pipe either to dup
+                # a subordinate end of a pipe either to dup
                 if stdout_is_tty_or_pipe and not tee_out:
                     self._stderr_read_fd = None
                 else:
